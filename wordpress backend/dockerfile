@@ -1,0 +1,7 @@
+FROM wordpress:latest
+
+# Best practices for optimizing the WordPress image
+COPY wp-content/ /var/www/html/wp-content
+
+# (Optional) Install your plugins using WP-CLI
+RUN wp plugin install plugin-name --activate
