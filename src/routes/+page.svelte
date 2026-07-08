@@ -53,7 +53,7 @@
 
   // Theme Preset Map (Game Worlds)
   const themePresets = [
-    { name: 'TOTK', '#00ffcc', label: 'Tears of the Kingdom' },
+    { name: 'TOTK', color: '#00ffcc', label: 'Tears of the Kingdom' },
     { name: 'CYBER', color: '#ff0055', label: 'Cyberpunk' },
     { name: 'MK8', color: '#ffcc00', label: 'Mario Kart' },
     { name: 'SPLATP', color: '#99ff00', label: 'Splatoon' },
