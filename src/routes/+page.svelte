@@ -435,8 +435,8 @@
               {/each}
             </div>
 
-            {@const currentTabInfo = inputData[activeTab]}
-            {#if currentTabInfo}
+            {#if inputData[activeTab]}
+              {@const currentTabInfo = inputData[activeTab]}
               {#key activeTab + rightPanelMode}
                 <div in:fade={{ duration: 200 }} class="space-y-4">
                   
