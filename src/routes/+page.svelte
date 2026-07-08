@@ -435,9 +435,9 @@
               {/each}
             </div>
 
-            {#key [activeTab, rightPanelMode]}
-              {@const currentTabInfo = inputData[activeTab]}
-              {#if currentTabInfo}
+            {@const currentTabInfo = inputData[activeTab]}
+            {#if currentTabInfo}
+              {#key activeTab + rightPanelMode}
                 <div in:fade={{ duration: 200 }} class="space-y-4">
                   
                   {#if rightPanelMode === 'logs'}
@@ -497,8 +497,9 @@
                   {/if}
 
                 </div>
-              {/if}
-            </div>
+              {/key}
+            {/if}
+
           </div>
 
           <div class="mt-8 pt-4 border-t-2 border-dashed border-black/20 dark:border-zinc-800 flex justify-between items-center text-xs font-mono text-[var(--text-muted)] font-bold">
