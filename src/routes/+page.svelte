@@ -53,7 +53,7 @@
 
   // Theme Preset Map (Game Worlds)
   const themePresets = [
-    { name: 'TOTK', color: '#00ffcc', label: 'Tears of the Kingdom' },
+    { name: 'TOTK', '#00ffcc', label: 'Tears of the Kingdom' },
     { name: 'CYBER', color: '#ff0055', label: 'Cyberpunk' },
     { name: 'MK8', color: '#ffcc00', label: 'Mario Kart' },
     { name: 'SPLATP', color: '#99ff00', label: 'Splatoon' },
@@ -123,12 +123,12 @@
   
   {#if theme.texture === 'ripstop'}
     <div 
-      class="canvas-grid-layer interactive-backdrop-mesh opacity-50"
+      class="canvas-grid-layer interactive-backdrop-mesh opacity-50 absolute inset-0 pointer-events-none z-0"
       style="background-size: 100% 100%, 12px 12px, 12px 12px;"
     ></div>
   {:else if theme.texture === 'matrix-dots'}
     <div 
-      class="canvas-grid-layer interactive-dot-matrix opacity-60"
+      class="canvas-grid-layer interactive-dot-matrix opacity-60 absolute inset-0 pointer-events-none z-0"
     ></div>
   {/if}
 
@@ -330,13 +330,14 @@
                 {/if}
               {:else if currentView === 'archive'}
                 <div in:fade={{ duration: 200 }} class="space-y-4 font-mono">
-                  <div class="flex justify-between items-center border-b border-black/20 dark:border-zinc-800 pb-2 mb-4">
+                  
+                  <div class="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-3 sm:gap-0 border-b border-black/20 dark:border-zinc-800 pb-3 mb-4">
                     <span class="text-xs font-bold text-[var(--accent)] dark:text-black dark:bg-[var(--accent)] dark:px-1.5 tracking-wider">// MAIN_ARCHIVE.LOG ({blogPosts.length} entries)</span>
                     <button 
                       onclick={() => currentView = 'post'} 
-                      class="text-xs font-bold text-white flex items-center gap-1 border border-black px-2 py-0.5 bg-black cursor-pointer transition-all shadow-[2px_2px_0px_#000] hover:translate-x-[-1px] hover:translate-y-[-1px]"
+                      class="text-xs font-bold text-white flex items-center gap-1 border border-black px-2 py-0.5 bg-black cursor-pointer transition-all shadow-[2px_2px_0px_#000] hover:translate-x-[-1px] hover:translate-y-[-1px] whitespace-nowrap"
                     >
-                      <CornerUpLeft class="w-3 h-3" /> RETURN
+                      <CornerUpLeft class="w-3 h-3 shrink-0" /> RETURN
                     </button>
                   </div>
                   
@@ -370,11 +371,11 @@
             class="border-3 border-black bg-[var(--card-bg)] p-5 relative shadow-[4px_4px_0px_#000] transition-all duration-300" 
             style="border-radius: var(--radius)"
           >
-            <div class="flex justify-between items-center border-b border-black/10 dark:border-zinc-800 pb-3 mb-3 font-mono text-xs font-bold text-[var(--text-muted)] uppercase">
-              <span class="flex items-center gap-1.5"><Archive class="w-4 h-4 text-[var(--accent)]" /> // HISTORICAL_JOURNAL_ROLL</span>
+            <div class="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-3 sm:gap-0 border-b border-black/10 dark:border-zinc-800 pb-3 mb-3 font-mono text-xs font-bold text-[var(--text-muted)] uppercase">
+              <span class="flex items-center gap-1.5"><Archive class="w-4 h-4 text-[var(--accent)] shrink-0" /> // HISTORICAL_JOURNAL_ROLL</span>
               <button 
                 onclick={() => currentView = 'archive'}
-                class="text-[11px] font-bold text-[var(--text-main)] hover:text-[var(--accent)] transition-colors flex items-center gap-1 cursor-pointer"
+                class="text-[11px] font-bold text-[var(--text-main)] hover:text-[var(--accent)] transition-colors flex items-center gap-1 cursor-pointer whitespace-nowrap"
               >
                 [ EXPLORE FULL INDEX ]
               </button>
@@ -408,12 +409,12 @@
         <div class="border-3 border-t-8 border-black border-t-transparent bg-[var(--card-bg)] p-6 md:p-8 flex-1 flex flex-col justify-between relative shadow-[4px_4px_0px_#000] transition-all duration-300" style="border-radius: var(--radius)">
           
           <div>
-            <div class="border-b-3 border-black pb-4 mb-6 flex justify-between items-center">
+            <div class="border-b-3 border-black pb-4 mb-6 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-4 sm:gap-0">
               <h2 class="text-2xl font-black uppercase tracking-tight flex items-center gap-2">
-                <Layers class="w-6 h-6 text-[var(--accent)] bg-black p-0.5" />
+                <Layers class="w-6 h-6 text-[var(--accent)] bg-black p-0.5 shrink-0" />
                 SIGNAL_INPUT
               </h2>
-              <span class="text-xs font-mono bg-[var(--accent)] border-2 border-black px-2 py-0.5 font-bold text-black shadow-[2px_2px_0px_#000]">
+              <span class="text-xs font-mono bg-[var(--accent)] border-2 border-black px-2 py-0.5 font-bold text-black shadow-[2px_2px_0px_#000] whitespace-nowrap">
                 {rightPanelMode === 'archive' ? 'HISTORICAL_ARCHIVE' : 'REACTIVE_LOGS'}
               </span>
             </div>
@@ -472,13 +473,14 @@
 
                   {:else if rightPanelMode === 'archive'}
                     <div class="space-y-4 font-mono">
-                      <div class="flex justify-between items-center border-b border-black/20 dark:border-zinc-800 pb-2 mb-2">
+                      
+                      <div class="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-3 sm:gap-0 border-b border-black/20 dark:border-zinc-800 pb-3 mb-2">
                         <span class="text-xs font-bold text-[var(--text-muted)] tracking-wider">// ALL_INDEXED_ENTRIES ({currentTabInfo.items.length})</span>
                         <button 
                           onclick={() => rightPanelMode = 'logs'} 
-                          class="text-xs font-black text-white flex items-center gap-1 border border-black px-2 py-0.5 bg-black cursor-pointer transition-all shadow-[2px_2px_0px_#000] hover:translate-x-[-1px] hover:translate-y-[-1px]"
+                          class="text-xs font-black text-white flex items-center gap-1 border border-black px-2 py-0.5 bg-black cursor-pointer transition-all shadow-[2px_2px_0px_#000] hover:translate-x-[-1px] hover:translate-y-[-1px] whitespace-nowrap"
                         >
-                          <CornerUpLeft class="w-3 h-3" /> RETURN_TO_FEED
+                          <CornerUpLeft class="w-3 h-3 shrink-0" /> RETURN_TO_FEED
                         </button>
                       </div>
                       
