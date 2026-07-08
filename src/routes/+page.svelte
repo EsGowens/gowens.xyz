@@ -256,20 +256,24 @@
             </div>
           </div>
 
-          <div class="flex flex-col gap-1.5">
+          <!-- REFACTORED COLOR PALETTE MODULE -->
+          <div class="flex flex-col gap-1.5 relative select-none">
             <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">04. SYSTEM_PALETTE</span>
-            <div class="group/palette flex items-center gap-2 border border-black/0 dark:border-transparent relative h-[26px]">
-              <div class="flex items-center gap-1.5 bg-black text-[var(--accent)] px-2 py-1 border border-black font-bold shadow-[2px_2px_0px_#000] z-10" style="border-radius: calc(var(--radius) / 2)">
+            <div class="group/palette flex items-center gap-2 relative h-[26px]">
+              
+              <!-- Trigger Base Toggle Node -->
+              <div class="flex items-center gap-1.5 bg-black text-[var(--accent)] px-2 py-1 border border-black font-bold shadow-[2px_2px_0px_#000] z-20 cursor-pointer" style="border-radius: calc(var(--radius) / 2)">
                 <Palette class="w-3.5 h-3.5 text-[var(--accent)]" />
                 <span class="text-[10px]">PRESETS</span>
               </div>
 
-              <div class="flex items-center gap-1.5 transition-all duration-300 ease-out origin-left max-w-0 opacity-0 pointer-events-none group-hover/palette:max-w-[200px] group-hover/palette:opacity-100 group-hover/palette:pointer-events-auto pl-0 group-hover/palette:pl-1">
+              <!-- Refactored Drawer: Slides up on mobile/small viewports, drops normal row line on large viewports -->
+              <div class="flex items-center gap-1.5 p-2 bg-[var(--card-bg)] border-2 border-black md:border-0 md:p-0 shadow-[4px_4px_0px_#000] md:shadow-none transition-all duration-300 ease-out origin-bottom md:origin-left scale-0 opacity-0 pointer-events-none group-hover/palette:scale-100 group-hover/palette:opacity-100 group-hover/palette:pointer-events-auto absolute bottom-[32px] md:bottom-auto left-0 md:left-auto md:relative z-30" style="border-radius: var(--radius)">
                 {#each themePresets as preset}
                   <button 
                     onclick={() => theme.accentColor = preset.color}
                     title={preset.label}
-                    class="w-5 h-5 border-2 border-black shadow-[1px_1px_0px_#000] hover:scale-110 active:scale-95 transition-all shrink-0"
+                    class="w-5 h-5 border-2 border-black shadow-[1px_1px_0px_#000] hover:scale-110 active:scale-95 transition-all shrink-0 cursor-pointer"
                     style="background-color: {preset.color}; {theme.accentColor === preset.color ? 'outline: 2px dashed var(--text-main); outline-offset: 1px;' : ''}; border-radius: calc(var(--radius) / 4)"
                   ></button>
                 {/each}
@@ -282,6 +286,7 @@
                   />
                 </label>
               </div>
+
             </div>
           </div>
 
