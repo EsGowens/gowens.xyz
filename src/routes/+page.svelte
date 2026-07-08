@@ -30,8 +30,8 @@
 
   // 1. Destructure file-system data loaded from page.server.ts using Svelte 5 Runes
   let { data } = $props();
-  const blogPosts = data?.blogPosts || [];
-  const inputData = data?.inputData || {};
+  let blogPosts = $derived(data?.blogPosts || []);
+  let inputData = $derived(data?.inputData || {});
 
   // 2. Icon lookup mapping for modular input categories
   const iconMap: Record<string, any> = {
@@ -65,9 +65,10 @@
   let activeTab = $state('books'); 
   let selectedPostId = $state(blogPosts[0]?.id || 1);
   let currentView = $state('post');
-  let rightPanelMode = $state('logs');     // NEW: Manages right panel view ('logs' | 'archive') 
+  let rightPanelMode = $state('logs');     // Manages right panel view ('logs' | 'archive') 
+  let isPaletteOpen = $state(false);       // Touch-safe reactive state manager for theme palette dropdown
 
-  // NEW: Reset the panel layout to live logs whenever the user changes category tabs
+  // Reset the panel layout to live logs whenever the user changes category tabs
   function handleTabChange(tabKey: string) {
     activeTab = tabKey;
     rightPanelMode = 'logs';
@@ -94,6 +95,7 @@
 
 <div 
   onmousemove={handleMouseMove}
+  role="presentation"
   class="min-h-screen font-sans transition-colors duration-300 relative pb-16 overflow-x-hidden"
   style="
     --accent: {theme.accentColor};
@@ -256,22 +258,27 @@
             </div>
           </div>
 
-          <!-- REFACTORED COLOR PALETTE MODULE -->
           <div class="flex flex-col gap-1.5 relative select-none">
             <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">04. SYSTEM_PALETTE</span>
-            <div class="group/palette flex items-center gap-2 relative h-[26px]">
+            <div class="flex items-center gap-2 relative h-[26px]">
               
-              <!-- Trigger Base Toggle Node -->
-              <div class="flex items-center gap-1.5 bg-black text-[var(--accent)] px-2 py-1 border border-black font-bold shadow-[2px_2px_0px_#000] z-20 cursor-pointer" style="border-radius: calc(var(--radius) / 2)">
+              <button 
+                onclick={() => isPaletteOpen = !isPaletteOpen}
+                class="flex items-center gap-1.5 bg-black text-[var(--accent)] px-2 py-1 border border-black font-bold shadow-[2px_2px_0px_#000] z-20 cursor-pointer font-mono text-[10px] uppercase tracking-normal" 
+                style="border-radius: calc(var(--radius) / 2)"
+              >
                 <Palette class="w-3.5 h-3.5 text-[var(--accent)]" />
-                <span class="text-[10px]">PRESETS</span>
-              </div>
+                <span>PRESETS</span>
+              </button>
 
-              <!-- Refactored Drawer: Slides up on mobile/small viewports, drops normal row line on large viewports -->
-              <div class="flex items-center gap-1.5 p-2 bg-[var(--card-bg)] border-2 border-black md:border-0 md:p-0 shadow-[4px_4px_0px_#000] md:shadow-none transition-all duration-300 ease-out origin-bottom md:origin-left scale-0 opacity-0 pointer-events-none group-hover/palette:scale-100 group-hover/palette:opacity-100 group-hover/palette:pointer-events-auto absolute bottom-[32px] md:bottom-auto left-0 md:left-auto md:relative z-30" style="border-radius: var(--radius)">
+              <div 
+                class="flex items-center gap-1.5 p-2 bg-[var(--card-bg)] border-2 border-black md:border-0 md:p-0 shadow-[4px_4px_0px_#000] md:shadow-none transition-all duration-300 ease-out origin-bottom md:origin-left absolute bottom-[34px] md:bottom-auto left-0 md:left-auto md:relative z-30
+                  {isPaletteOpen ? 'scale-100 opacity-100 pointer-events-auto' : 'scale-0 opacity-0 pointer-events-none'}" 
+                style="border-radius: var(--radius)"
+              >
                 {#each themePresets as preset}
                   <button 
-                    onclick={() => theme.accentColor = preset.color}
+                    onclick={() => { theme.accentColor = preset.color; isPaletteOpen = false; }}
                     title={preset.label}
                     class="w-5 h-5 border-2 border-black shadow-[1px_1px_0px_#000] hover:scale-110 active:scale-95 transition-all shrink-0 cursor-pointer"
                     style="background-color: {preset.color}; {theme.accentColor === preset.color ? 'outline: 2px dashed var(--text-main); outline-offset: 1px;' : ''}; border-radius: calc(var(--radius) / 4)"
@@ -491,7 +498,7 @@
 
                 </div>
               {/if}
-            {/key}
+            </div>
           </div>
 
           <div class="mt-8 pt-4 border-t-2 border-dashed border-black/20 dark:border-zinc-800 flex justify-between items-center text-xs font-mono text-[var(--text-muted)] font-bold">
