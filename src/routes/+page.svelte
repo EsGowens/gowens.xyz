@@ -119,6 +119,12 @@ function handleReferenceLeave() {
 
 // Find the hovered post details dynamically
 let hoveredPostData = $derived(blogPosts.find((p: any) => p.id === hoveredPostId));
+let isSystemFlickering = $state(false);
+
+function triggerFlicker() {
+  isSystemFlickering = true;
+  setTimeout(() => isSystemFlickering = false, 150);
+}
 </script>
 
 <div 
@@ -150,15 +156,17 @@ let hoveredPostData = $derived(blogPosts.find((p: any) => p.id === hoveredPostId
 >
   
   {#if theme.texture === 'ripstop'}
-    <div 
-      class="canvas-grid-layer interactive-backdrop-mesh opacity-50 absolute inset-0 pointer-events-none z-0"
-      style="background-size: 100% 100%, 12px 12px, 12px 12px;"
-    ></div>
-  {:else if theme.texture === 'matrix-dots'}
-    <div 
-      class="canvas-grid-layer interactive-dot-matrix opacity-60 absolute inset-0 pointer-events-none z-0"
-    ></div>
-  {/if}
+  <div 
+    class="canvas-grid-layer interactive-backdrop-mesh opacity-50 absolute inset-0 pointer-events-none z-0 
+      {isSystemFlickering ? 'animate-pulse opacity-100' : ''}" 
+    style="background-size: 100% 100%, 12px 12px, 12px 12px;"
+  ></div>
+{:else if theme.texture === 'matrix-dots'}
+  <div 
+    class="canvas-grid-layer interactive-dot-matrix opacity-60 absolute inset-0 pointer-events-none z-0 
+      {isSystemFlickering ? 'animate-pulse opacity-100' : ''}" 
+  ></div>
+{/if}
 
   <header 
     class="sticky top-0 z-40 border-b-3 border-black py-4 px-6 md:px-12 flex justify-between items-center shadow-[0_4px_0px_#000] transition-colors duration-300"
@@ -306,7 +314,7 @@ let hoveredPostData = $derived(blogPosts.find((p: any) => p.id === hoveredPostId
               >
                 {#each themePresets as preset}
                   <button 
-                    onclick={() => { theme.accentColor = preset.color; isPaletteOpen = false; }}
+                    onclick={() => { theme.accentColor = preset.color; isPaletteOpen = false; triggerFlicker();}}
                     title={preset.label}
                     class="w-5 h-5 border-2 border-black shadow-[1px_1px_0px_#000] hover:scale-110 active:scale-95 transition-all shrink-0 cursor-pointer"
                     style="background-color: {preset.color}; {theme.accentColor === preset.color ? 'outline: 2px dashed var(--text-main); outline-offset: 1px;' : ''}; border-radius: calc(var(--radius) / 4)"
