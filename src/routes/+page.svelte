@@ -78,9 +78,21 @@
   let activePost = $derived(blogPosts.find((p: any) => p.id === selectedPostId) || blogPosts[0]);
   let olderPosts = $derived(blogPosts.filter((p: any) => p.id !== selectedPostId));
 
+  // UX Fix: Calculate coordinates and smoothly glide to the top of the blog view, accounting for the sticky header
+  function scrollToThoughts() {
+    setTimeout(() => {
+      const el = document.getElementById('thoughts-section');
+      if (el) {
+        const y = el.getBoundingClientRect().top + window.scrollY - 100;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }, 10);
+  }
+
   function handleSelectPost(id: number) {
     selectedPostId = id;
     currentView = 'post';
+    scrollToThoughts();
   }
 
   // Lightweight mouse coordinate tracking state for background warping
@@ -302,7 +314,7 @@
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10">
       
-      <section class="lg:col-span-7 flex flex-col gap-6" aria-label="Gowens Blog Widget">
+      <section class="lg:col-span-7 flex flex-col gap-6" aria-label="Gowens Blog Widget" id="thoughts-section">
         
         <div 
           class="border-3 border-t-8 border-black border-t-[var(--accent)] bg-[var(--card-bg)] p-6 md:p-8 flex-1 flex flex-col justify-between relative shadow-[4px_4px_0px_#000] transition-all duration-300" 
@@ -334,7 +346,7 @@
                   <div class="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-3 sm:gap-0 border-b border-black/20 dark:border-zinc-800 pb-3 mb-4">
                     <span class="text-xs font-bold text-[var(--accent)] dark:text-black dark:bg-[var(--accent)] dark:px-1.5 tracking-wider">// MAIN_ARCHIVE.LOG ({blogPosts.length} entries)</span>
                     <button 
-                      onclick={() => currentView = 'post'} 
+                      onclick={() => { currentView = 'post'; scrollToThoughts(); }} 
                       class="text-xs font-bold text-white flex items-center gap-1 border border-black px-2 py-0.5 bg-black cursor-pointer transition-all shadow-[2px_2px_0px_#000] hover:translate-x-[-1px] hover:translate-y-[-1px] whitespace-nowrap"
                     >
                       <CornerUpLeft class="w-3 h-3 shrink-0" /> RETURN
@@ -344,7 +356,7 @@
                   <div class="flex flex-col gap-2.5 max-h-[400px] overflow-y-auto pr-1">
                     {#each blogPosts as post}
                       <button 
-                        onclick={() => { handleSelectPost(post.id); currentView = 'post'; }}
+                        onclick={() => handleSelectPost(post.id)}
                         class="w-full text-left p-2.5 border-2 border-black hover:border-[var(--accent)] bg-black/10 dark:bg-black/30 hover:bg-black/50 transition-all flex justify-between items-center group cursor-pointer shadow-[2px_2px_0px_#000]"
                         style="border-radius: calc(var(--radius) / 2)"
                       >
@@ -374,7 +386,7 @@
             <div class="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-3 sm:gap-0 border-b border-black/10 dark:border-zinc-800 pb-3 mb-3 font-mono text-xs font-bold text-[var(--text-muted)] uppercase">
               <span class="flex items-center gap-1.5"><Archive class="w-4 h-4 text-[var(--accent)] shrink-0" /> // HISTORICAL_JOURNAL_ROLL</span>
               <button 
-                onclick={() => currentView = 'archive'}
+                onclick={() => { currentView = 'archive'; scrollToThoughts(); }}
                 class="text-[11px] font-bold text-[var(--text-main)] hover:text-[var(--accent)] transition-colors flex items-center gap-1 cursor-pointer whitespace-nowrap"
               >
                 [ EXPLORE FULL INDEX ]
