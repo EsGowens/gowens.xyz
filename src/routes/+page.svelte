@@ -103,6 +103,22 @@
     mouseX = event.clientX;
     mouseY = event.clientY;
   }
+// Add to your state declarations
+let hoveredPostId = $state<number | null>(null);
+let previewCoords = $state({ x: 0, y: 0 });
+
+function handleReferenceHover(event: MouseEvent, targetId: number) {
+  hoveredPostId = targetId;
+  // Position the preview slightly offset from the mouse cursor
+  previewCoords = { x: event.clientX + 15, y: event.clientY + 15 };
+}
+
+function handleReferenceLeave() {
+  hoveredPostId = null;
+}
+
+// Find the hovered post details dynamically
+let hoveredPostData = $derived(blogPosts.find((p: any) => p.id === hoveredPostId));
 </script>
 
 <div 
@@ -527,6 +543,21 @@
   </section>
 
   <ResumeModal bind:isOpen={isResumeOpen} />
+{#if hoveredPostId && hoveredPostData}
+    <div 
+      transition:fade={{ duration: 100 }}
+      class="fixed z-50 max-w-xs p-4 bg-[var(--card-bg)] border-2 border-black pointer-events-none font-sans shadow-[4px_4px_0px_#000]"
+      style="left: {previewCoords.x}px; top: {previewCoords.y}px; border-radius: var(--radius);"
+    >
+      <div class="font-mono text-[9px] font-bold text-[var(--accent)] bg-black px-1.5 py-0.5 inline-block mb-2">
+        REF_NODE: {hoveredPostData.date}
+      </div>
+      <h4 class="font-black text-xs uppercase tracking-tight mb-1">{hoveredPostData.title}</h4>
+      <p class="text-[11px] opacity-80 line-clamp-3 leading-normal">
+        {hoveredPostData.content}
+      </p>
+    </div>
+  {/if}
   <footer class="w-full mt-16 border-t-3 border-black py-4 px-6 md:px-12 flex justify-between items-center font-mono text-[10px] uppercase font-bold text-[var(--text-muted)] bg-[var(--header-bg)] shadow-[0_-4px_0px_#000]">
     <div class="flex items-center gap-4">
       <span>SYS_STATUS: ONLINE</span>
