@@ -1,0 +1,6 @@
+{
+  "name": "Gowens Personal Brand",
+  "description": "A high-contrast Neo-Brutalist personal brand site for Gowens.xyz, featuring a modal resume, active media/meals log, and a dynamic blog widget built using Svelte 5 and SvelteKit.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

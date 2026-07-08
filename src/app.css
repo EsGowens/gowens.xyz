@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-neo-green: #00ffcc;
+  --color-neo-green-dark: #0ee6a0;
+  --color-neo-black: #121212;
+  --color-neo-dark-gray: #1a1a1a;
+  --color-neo-light: #f5f5f5;
+  --font-sans: "Space Grotesk", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+/* Custom Neo-Brutalist Classes */
+.neo-border-thick {
+  border: 3px solid #000000;
+}
+
+.neo-border-thin {
+  border: 2px solid #000000;
+}
+
+.neo-shadow-black {
+  box-shadow: 4px 4px 0px #000000;
+}
+
+.neo-shadow-black-lg {
+  box-shadow: 8px 8px 0px #000000;
+}
+
+.neo-shadow-green {
+  box-shadow: 4px 4px 0px #00ffcc;
+}
+
+.neo-shadow-green-lg {
+  box-shadow: 6px 6px 0px #00ffcc;
+}
+
+.neo-button {
+  background-color: #00ffcc;
+  color: #000000;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  border: 3px solid #000000;
+  box-shadow: 4px 4px 0px #000000;
+  transition: all 0.15s ease-in-out;
+}
+
+.neo-button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0px #000000;
+}
+
+.neo-button:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0px #000000;
+}
+
+.neo-button-secondary {
+  background-color: #f5f5f5;
+  color: #000000;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  border: 3px solid #000000;
+  box-shadow: 4px 4px 0px #000000;
+  transition: all 0.15s ease-in-out;
+}
+
+.neo-button-secondary:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0px #000000;
+}
+
+.neo-button-secondary:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0px #000000;
+}
+
+.neo-card {
+  background-color: #f5f5f5;
+  color: #000000;
+  border: 3px solid #000000;
+  box-shadow: 8px 8px 0px #000000;
+}
+
+.neo-card-dark {
+  background-color: #1a1a1a;
+  color: #f5f5f5;
+  border: 3px solid #000000;
+  box-shadow: 8px 8px 0px #00ffcc;
+}
+
+/* Custom scrollbar for Neo-Brutalist look */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-left: 2px solid #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00ffcc;
+  border: 2px solid #000000;
+}
+
+/* --- GLOBAL TERMINAL MICRO-INTERACTIONS --- */
+
+/* Scanline sweep animation across the active status ticker */
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(300%); }
+}
+
+/* Smooth mechanical tilt for tab buttons on hover */
+@keyframes icon-wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(8deg); }
+}
+
+.animate-scan {
+  animation: scanline 4s linear infinite;
+}
+
+/* Utility hook targeting the lucide SVG element inside hovered buttons */
+.tab-hover-target:hover svg {
+  animation: icon-wiggle 0.3s ease-in-out infinite;
+}
+/* --- BACKGROUND HARDWARE COMPONENT DISPLACEMENT MATRIX --- */
+
+/* Establish the base structural backdrop layer */
+.canvas-grid-layer {
+  position: fixed;
+  inset: -20px; /* Slight overflow bounds to prevent edge gaps during movement */
+  pointer-events: none;
+  z-index: 0;
+  transform: translate3d(0, 0, 0); /* Force GPU layer rendering */
+}
+
+/* Mathematical Pointer Displace: 
+  Uses a radial gradient masking trick. The background texture itself stays anchored, 
+  but it introduces an organic shift to the texture canvas right underneath the mouse.
+*/
+.interactive-backdrop-mesh {
+  background-image: 
+    radial-gradient(circle 120px at var(--mouse-x) var(--mouse-y), transparent 10%, var(--grid-color) 90%),
+    linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+  background-size: 100% 100%, 24px 24px, 24px 24px;
+  transition: background-image 0.1s ease-out;
+}
+
+/* If you are using the dot-matrix texture style setting, 
+  this shifts the dot nodes slightly away from the mouse cursor vector.
+*/
+.interactive-dot-matrix {
+  background-image: radial-gradient(var(--grid-heavy) 1.5px, transparent 1.5px);
+  background-size: 16px 16px;
+  
+  /* Applies a subtle parallax push using the custom coordinate properties */
+  transform: translate3d(
+    calc((var(--mouse-x) - 50vw) * -0.015), 
+    calc((var(--mouse-y) - 50vh) * -0.015), 
+    0
+  );
+  transition: transform 0.2s cubic-bezier(0.1, 0.8, 0.2, 1);
+}

@@ -1,0 +1,28 @@
+{
+  "name": "gowens-personal-brand",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev --port=3000 --host=0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --port=3000 --host=0.0.0.0",
+    "lint": "svelte-check --tsconfig ./tsconfig.json"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.14",
+    "lucide-svelte": "^0.475.0",
+    "tailwindcss": "^4.1.14"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-cloudflare": "^7.2.9",
+    "@sveltejs/adapter-static": "^3.0.10",
+    "@sveltejs/kit": "^2.15.2",
+    "@sveltejs/vite-plugin-svelte": "^5.1.1",
+    "@types/node": "^26.1.0",
+    "svelte": "^5.16.1",
+    "svelte-check": "^4.1.1",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.3"
+  }
+}
