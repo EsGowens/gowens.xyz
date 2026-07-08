@@ -260,7 +260,7 @@
 
           <div class="flex flex-col gap-1.5 relative select-none">
             <span class="text-[9px] font-bold text-zinc-500 uppercase tracking-wider">04. SYSTEM_PALETTE</span>
-            <div class="flex items-center gap-2 relative h-[26px]">
+            <div class="group/palette flex items-center gap-2 relative h-[26px]">
               
               <button 
                 onclick={() => isPaletteOpen = !isPaletteOpen}
@@ -273,7 +273,7 @@
 
               <div 
                 class="flex items-center gap-1.5 p-2 bg-[var(--card-bg)] border-2 border-black md:border-0 md:p-0 shadow-[4px_4px_0px_#000] md:shadow-none transition-all duration-300 ease-out origin-bottom md:origin-left absolute bottom-[34px] md:bottom-auto left-0 md:left-auto md:relative z-30
-                  {isPaletteOpen ? 'scale-100 opacity-100 pointer-events-auto' : 'scale-0 opacity-0 pointer-events-none'}" 
+                  {isPaletteOpen ? 'scale-100 opacity-100 pointer-events-auto' : 'scale-0 opacity-0 pointer-events-none md:group-hover/palette:scale-100 md:group-hover/palette:opacity-100 md:group-hover/palette:pointer-events-auto'}" 
                 style="border-radius: var(--radius)"
               >
                 {#each themePresets as preset}
@@ -384,16 +384,16 @@
               {#each blogPosts.slice(0, 3) as post}
                 <button
                   onclick={() => handleSelectPost(post.id)}
-                  class="text-left p-3 border-2 border-black flex flex-col justify-between gap-2.5 transition-all cursor-pointer relative group
+                  class="text-left p-3 border-2 border-black flex flex-col md:flex-row md:items-center gap-2 transition-all cursor-pointer relative group
                     {selectedPostId === post.id 
                       ? 'bg-[var(--accent)] text-black shadow-[2px_2px_0px_#000] translate-x-[-1px] translate-y-[-1px]' 
                       : 'bg-black/5 dark:bg-black/20 hover:bg-black/10 dark:hover:bg-black/40 hover:translate-y-[-1px]'}"
                   style="border-radius: calc(var(--radius) / 2)"
                 >
-                  <span class="text-[9px] font-mono font-bold opacity-60 group-hover:opacity-100 transition-opacity">
+                  <span class="text-[9px] font-mono font-bold opacity-60 group-hover:opacity-100 transition-opacity whitespace-nowrap shrink-0">
                     {post.date}
                   </span>
-                  <span class="text-xs font-black font-sans uppercase line-clamp-2 tracking-tight leading-snug flex-1">
+                  <span class="text-xs font-black font-sans uppercase truncate tracking-tight leading-snug flex-1 block">
                     {post.title}
                   </span>
                 </button>
@@ -497,7 +497,7 @@
                   {/if}
 
                 </div>
-              {/key}
+              {#/key}
             {/if}
 
           </div>
