@@ -447,22 +447,31 @@ let hoveredPostData = $derived(blogPosts.find((p: any) => p.id === hoveredPostId
               </span>
             </div>
 
-            <div class="grid grid-cols-3 gap-2 mb-6 font-mono font-bold">
-              {#each Object.keys(inputData) as tabKey}
-                {@const Icon = iconMap[tabKey] || Tv}
-                <button
-                  onclick={() => handleTabChange(tabKey)}
-                  class="tab-hover-target flex flex-col items-center justify-center p-2 border-2 border-black text-xs font-black transition-all cursor-pointer relative uppercase
-                    {activeTab === tabKey 
-                      ? 'bg-[var(--accent)] text-black shadow-[2px_2px_0px_#000] translate-x-[-1px] translate-y-[-1px]' 
-                      : 'bg-[var(--card-bg)] hover:bg-black/5 dark:hover:bg-white/5 hover:translate-y-[-1px]'}"
-                  style="border-radius: calc(var(--radius) / 2)"
-                >
-                  <Icon class="w-4 h-4 mb-1 transition-transform duration-200" />
-                  {tabKey}
-                </button>
-              {/each}
-            </div>
+            <div class="grid grid-cols-3 gap-2 mb-6 font-mono font-bold relative">
+  {#each Object.keys(inputData) as tabKey}
+    {@const Icon = iconMap[tabKey] || Tv}
+    <button
+      onclick={() => handleTabChange(tabKey)}
+      class="tab-hover-target flex flex-col items-center justify-center p-2 border-2 border-black text-xs font-black transition-all cursor-pointer relative uppercase z-10
+        {activeTab === tabKey 
+          ? 'bg-[var(--accent)] text-black shadow-[2px_2px_0px_#000] translate-x-[-1px] translate-y-[-1px]' 
+          : 'bg-[var(--card-bg)] hover:bg-black/5 dark:hover:bg-white/5 hover:translate-y-[-1px]'}"
+      style="border-radius: calc(var(--radius) / 2)"
+    >
+      {#if activeTab === tabKey}
+        <span 
+          in:slide={{ axis: 'x', duration: 150 }} 
+          class="absolute left-2 top-2 font-mono text-[9px] text-black/40 pointer-events-none"
+        >
+          //
+        </span>
+      {/if}
+
+      <Icon class="w-4 h-4 mb-1 transition-transform duration-200" />
+      {tabKey}
+    </button>
+  {/each}
+</div>
 
             {#if inputData[activeTab]}
               {@const currentTabInfo = inputData[activeTab]}
